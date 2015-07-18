@@ -33,14 +33,19 @@ var fakeBoard = function(board,player){
   };
 };
 var game = function(player1,player2){
+  var turn = function(playFunc,player){
+    console.count(player);
+    var other =  (player==='O')?'X':'O';
+    var change = playFunc(fakeBoard(board,player));
+    console.change(change);
+    change.val = ((change.val)==='me')?player:other;
+    console.change(change);
+    board.addSq(change);
+    console.board(board);
+  }
   var board = Board();
   console.board(board);
-  var player = 'O';
-  var other = 'X'
-  var change = player1(fakeBoard(board,player));
-  console.change(change);
-  change.val = ((change.val)==='me')?player:other;
-  console.change(change);
-  board.addSq(change);
-  console.board(board);
+  turn(player1,'O');
+  turn(player2,'X');
+  turn(player1,'O');
 };
