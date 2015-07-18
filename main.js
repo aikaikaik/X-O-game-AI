@@ -34,13 +34,13 @@ var fakeBoard = function(board,player){
 };
 var game = function(player1,player2){
   var board = Board();
-  console.log(board.getData());
+  console.board(board);
   var player = 'O';
   var other = 'X'
   var change = player1(fakeBoard(board,player));
-  console.log(change);
+  console.change(change);
   change.val = ((change.val)==='me')?player:other;
-  console.log(change);
+  console.change(change);
   board.addSq(change);
-  console.log(board.getData());
+  console.board(board);
 };
