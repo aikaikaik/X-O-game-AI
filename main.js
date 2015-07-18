@@ -37,6 +37,7 @@ var game = function(player1,player2){
     console.count(player);
     var other =  (player==='O')?'X':'O';
     var change = playFunc(fakeBoard(board,player));
+    if(board.getData()[change.x][change.y]){console.error('over-riding')}
     console.change(change);
     change.val = ((change.val)==='me')?player:other;
     console.change(change);
