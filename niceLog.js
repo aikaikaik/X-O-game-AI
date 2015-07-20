@@ -22,3 +22,9 @@ console.change = function(change){
   }
   console.log(text);
 };
+console.count = console.count || function(a){
+  console.counters = console.counters || {};
+  console.counters[a] = console.counters[a] || 0;
+  console.counters[a]++;
+  console.log(a+':'+console.counters[a]);
+};

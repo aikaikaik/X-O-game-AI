@@ -37,7 +37,7 @@ var Board = function(){
 };
 var fakeBoard = function(board,player){
   return {
-    getData () {
+    getData: function () {
       var fakedata = board.getData();
       for(var row = 0; row<board.data().length; row++){
         for(var sq = 0; sq<board.data()[0].length; sq++){
@@ -58,14 +58,13 @@ var fakeBoard = function(board,player){
     }
   };
 };
-var game = function(player1,player2){
+module.exports = function(player1,player2){
   var turn = function(playFunc,player){
     console.count(player);
-    var other =  (player==='O')?'X':'O';
     var change = playFunc(fakeBoard(board,player));
     if(board.getData()[change.x][change.y]){console.error('over-riding')}
     console.change(change);
-    change.val = ((change.val)==='me')?player:other;
+    change.val = player;
     console.change(change);
     board.addSq(change);
     console.board(board);
