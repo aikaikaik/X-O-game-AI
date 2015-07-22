@@ -38,10 +38,14 @@ var Board = function(){
 var fakeBoard = function(board,player){
   return {
     getData: function () {
-      var fakedata = board.getData();
-      for(var row = 0; row<board.data().length; row++){
-        for(var sq = 0; sq<board.data()[0].length; sq++){
-          switch(board.data()[row][sq]){
+      var fakedata = [
+        [null,null,null]
+        ,[null,null,null]
+        ,[null,null,null]
+      ];
+      for(var row = 0; row<board.getData().length; row++){
+        for(var sq = 0; sq<board.getData()[0].length; sq++){
+          switch(board.getData()[row][sq]){
             case null:
               fakedata[row][sq]=null;
             break;
@@ -59,6 +63,7 @@ var fakeBoard = function(board,player){
   };
 };
 module.exports = function(player1,player2){
+  var board = Board();
   var turn = function(playFunc,player){
     console.count(player);
     var change = playFunc(fakeBoard(board,player));
@@ -70,7 +75,6 @@ module.exports = function(player1,player2){
     console.board(board);
     console.log(board.whoWon());
   }
-  var board = Board();
   console.board(board);
   while(true){
     turn(player1,'O');
