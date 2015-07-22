@@ -72,8 +72,10 @@ module.exports = function(player1,player2){
   }
   var board = Board();
   console.board(board);
-  for(var i = 0; i<10; i++){
+  while(true){
     turn(player1,'O');
+    if(board.whoWon()){break;}
     turn(player2,'X');
+    if(board.whoWon()){break;}
   }
 };
