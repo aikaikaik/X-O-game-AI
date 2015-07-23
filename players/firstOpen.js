@@ -1,5 +1,5 @@
 var fromNumToChange = function(num){
-  return {'x':Math.floor(num/3),'y':num-Math.floor(num/3)};
+  return {'x':Math.floor(num/3),'y':num%3};
 };
 var thePlayer = function(board,num){
   var data = board.getData();
