@@ -36,11 +36,12 @@ var compair = function(p1,p2,strp1,strp2,gameNumber){
       }
 };
 
-rl.question('how many games?: ',function(gameNumber){
+var theThing = function(gameNumber){
   for(var a in players){
     for(var b in players){
       compair(pnameToFunc(players[a]),pnameToFunc(players[b]),players[a],players[b],gameNumber);
     }
   }
-  rl.close();
-});
+};
+
+if(module.parent){module.exports = theThing;}else{rl.question('how many times?: ',function(gameNumber){theThing(gameNumber);rl.close();});}
