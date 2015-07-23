@@ -62,7 +62,7 @@ var fakeBoard = function(board,player){
     }
   };
 };
-module.exports = function(player1,player2){
+module.exports = function(player1,player2,isXfirst){
   var board = Board();
   var turn = function(playFunc,player){
     console.count(player);
@@ -77,9 +77,10 @@ module.exports = function(player1,player2){
   }
   console.board(board);
   while(true){
-    turn(player1,'O');
+    turn(player1,(isXfirst)?'X':'O');
     if(board.whoWon()){break;}
-    turn(player2,'X');
+    turn(player2,(isXfirst)?'O':'X');
     if(board.whoWon()){break;}
   }
+  return board;
 };
