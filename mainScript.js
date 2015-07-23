@@ -9,30 +9,38 @@ var rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout
 });
-//players
-var p1;
-var p2;
-rl.question('p1 is on (random, or firstOpen)?: ',function(strp1){
-  p1 = fromNetToFunc(JSON.parse(fs.readFileSync('./nets/'+strp1+'.net.json')));
-  rl.question('p2 in on(same)?: ',function(strp2){
-    p2 = fromNetToFunc(JSON.parse(fs.readFileSync('./nets/'+strp2+'.net.json')));
-    //how meny times?
-    rl.question('how many games do you want?: ',function(gameNumber){
-      //set up statistics numbers
-      var gameEndBoards = [];
-      var whoWonStats = {'X':0,'O':0,'=':0};
-      rl.question('do you want to replace who\'s first and who\'s last player?("no" for no, and anything else for yes): ',function(toRepStr){
-        var toRepBool = (toRepStr==='no')?false:true;
-        //do the games
-        for(var i = 0; i < gameNumber; i++){
-          gameEndBoards.push(game(p1,p2,(!toRepBool || i/2===Math.floor(i/2))?true:false));
-          whoWonStats[gameEndBoards[i].whoWon()]++;
-        }
-        console.log('X('+strp1+') won '+whoWonStats.X/gameNumber*100+'%');
-        console.log('O('+strp2+') won '+whoWonStats.O/gameNumber*100+'%');
-        console.log('\'twas a match '+whoWonStats['=']/gameNumber*100+'%');
-        rl.close();
-      });
-    });
-  });
+var players = ['random','firstOpen','normal'];
+var pnameToFunc = function(strp){return fromNetToFunc(JSON.parse(fs.readFileSync('./nets/'+strp+'.net.json')));};
+
+var compair = function(p1,p2,strp1,strp2,gameNumber){
+    //set up statistics numbers
+    var gameEndBoards = [];
+    var whoWonStats = {'X':0,'O':0,'=':0};
+      //do the games
+      for(var i = 0; i < gameNumber; i++){
+        gameEndBoards.push(game(p1,p2,(i/2===Math.floor(i/2))?true:false));
+        whoWonStats[gameEndBoards[i].whoWon()]++;
+      }
+      console.log('X won '+whoWonStats.X/gameNumber*100+'%');
+      console.log('O won '+whoWonStats.O/gameNumber*100+'%');
+      console.log('\'twas a match '+whoWonStats['=']/gameNumber*100+'%');
+      if(gameNumber%2===0){
+        var netData = JSON.parse(fs.readFileSync('./netData.json'));
+        netData[strp1] = netData[strp1] || {};
+        netData[strp1][strp2] = netData[strp1][strp2] || {'gameNumber':0.0,'me':0.0,'it':0.0,'=':0.0};
+        netData[strp1][strp2].gameNumber += parseInt(gameNumber);
+        netData[strp1][strp2].me+= parseInt(whoWonStats.X);
+        netData[strp1][strp2].it   += parseInt(whoWonStats.O);
+        netData[strp1][strp2]['=']+= parseInt(whoWonStats['=']);
+        fs.writeFileSync('./netData.json',JSON.stringify(netData));
+      }
+};
+
+rl.question('how many games?: ',function(gameNumber){
+  for(var a in players){
+    for(var b in players){
+      compair(pnameToFunc(players[a]),pnameToFunc(players[b]),players[a],players[b],gameNumber);
+    }
+  }
+  rl.close();
 });
