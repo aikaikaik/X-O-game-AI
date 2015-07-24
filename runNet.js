@@ -34,7 +34,7 @@ var getProbBoard = function(network,nodeVals){
 var getRandomSq = function(data,boardWeights) {
   var result = {'x':Math.floor(Math.random()*3),'y':Math.floor(Math.random()*3)};
   var random = Math.random();
-  if(random<boardWeights[result.x][result.y] && data[result.x][result.y]===null){return result;}else{return getRandomSq(board,boardWeights);}
+  if(random<boardWeights[result.x][result.y] && data[result.x][result.y]===null){return result;}else{return getRandomSq(data,boardWeights);}
 }
 
 module.exports = function(network){
