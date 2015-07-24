@@ -1,7 +1,6 @@
-var getNodeVals = function(board,network){
+var getNodeVals = function(data,network){
   var nodeVals = [];
   var sum = 0;
-  var data = board.getData();
   for(var node in network.nodes){
     nodeVals.push(0);
   }
@@ -32,14 +31,15 @@ var getProbBoard = function(network,nodeVals){
   return probBoard;
 }
 
-var getRandomSq = function(board,boardWeights) {
+var getRandomSq = function(data,boardWeights) {
   var result = {'x':Math.floor(Math.random()*3),'y':Math.floor(Math.random()*3)};
   var random = Math.random();
-  if(random<boardWeights[result.x][result.y] && board.getData()[result.x][result.y]===null){return result;}else{return getRandomSq(board,boardWeights);}
+  if(random<boardWeights[result.x][result.y] && data[result.x][result.y]===null){return result;}else{return getRandomSq(board,boardWeights);}
 }
 
 module.exports = function(network){
   return function(board){
-    return getRandomSq(board,getProbBoard(network,getNodeVals(board,network)));
+    var data = board.getData();
+    return getRandomSq(data,getProbBoard(network,getNodeVals(data,network)));
   };
 };
