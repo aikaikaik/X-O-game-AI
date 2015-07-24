@@ -38,3 +38,9 @@ goodNets.forEach(function(val,i,arr){
   if(goodNets.indexOf(minNetName)===-1){goodNets.push(minNetName);}
 });
 fs.writeFileSync('./goodNets.json',JSON.stringify(goodNets));
+fs.writeFileSync('./nets.json',JSON.stringify(goodNets));
+for(var i = 0; i<netNames; i++){
+  if(goodNets.indexOf(netNames[i])===-1){
+    fs.unlink('./nets/'+netNames[i]+'.net.json');
+  }
+}
