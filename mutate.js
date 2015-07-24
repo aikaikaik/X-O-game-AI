@@ -24,7 +24,8 @@ var goodNets = JSON.parse(fs.readFileSync('goodNets.json'));
 goodNets.forEach(function(val,i,arr){
   mutateNetFile(val);
 });
-compairAll(netNames,400);
+fs.writeFileSync('./netData.json',JSON.stringify({}));
+compairAll(goodNets,netNames,400);
 var netData = JSON.parse(fs.readFileSync('netData.json'));
 goodNets.forEach(function(val,i,arr){
   var min = 2;
