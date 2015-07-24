@@ -32,10 +32,27 @@ var getProbBoard = function(network,nodeVals){
 }
 
 var getRandomSq = function(data,boardWeights) {
-  var result = {'x':Math.floor(Math.random()*3),'y':Math.floor(Math.random()*3)};
-  var random = Math.random();
-  if(random<boardWeights[result.x][result.y] && data[result.x][result.y]===null){return result;}else{return getRandomSq(data,boardWeights);}
-}
+  if(boardWeights[0][0] !== boardWeights[0][0]){boardWeights = [[1,1,1],[1,1,1],[1,1,1]];}
+  var sum = boardWeights.reduce(function(pval,val,i,arr){
+    return pval+val.reduce(function(pval2,val2,i2,arr2){
+      return (data[i][i2]===null)?pval2+val2:pval2
+    },0);
+  },0);
+  var weight_sum = 0;
+  var randomNum = Math.random()*sum;
+  for(var x = 0; x < 3; x++){
+    for(var y = 0; y < 3; y++){
+      if(data[x][y]===null){
+        weight_sum += boardWeights[x][y];
+        console.board({getData:function(){return boardWeights;}});
+        console.log('x:'+x+', y'+y+', weight_sum:'+weight_sum+', randomNum:'+randomNum+', sum:'+sum);
+        if (randomNum <= weight_sum) {
+          return {'x':x,'y':y};
+        }
+      }
+    }
+  }
+};
 
 module.exports = function(network){
   return function(board){
