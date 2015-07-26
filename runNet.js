@@ -44,8 +44,8 @@ var getRandomSq = function(data,boardWeights) {
     for(var y = 0; y < 3; y++){
       if(data[x][y]===null){
         weight_sum += boardWeights[x][y];
-        console.board({getData:function(){return boardWeights;}});
-        console.log('x:'+x+', y'+y+', weight_sum:'+weight_sum+', randomNum:'+randomNum+', sum:'+sum);
+        //console.board({getData:function(){return boardWeights;}});
+        //console.log('x:'+x+', y'+y+', weight_sum:'+weight_sum+', randomNum:'+randomNum+', sum:'+sum);
         if (randomNum <= weight_sum) {
           return {'x':x,'y':y};
         }

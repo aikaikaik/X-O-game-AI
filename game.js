@@ -65,17 +65,17 @@ var fakeBoard = function(board,player){
 module.exports = function(player1,player2,isXfirst){
   var board = Board();
   var turn = function(playFunc,player){
-    console.count(player);
+    //console.count(player);
     var change = playFunc(fakeBoard(board,player));
     if(board.getData()[change.x][change.y]){console.error('over-riding')}
-    console.change(change);
+    //console.change(change);
     change.val = player;
-    console.change(change);
+    //console.change(change);
     board.addSq(change);
-    console.board(board);
-    console.log(board.whoWon());
+    //console.board(board);
+    //console.log(board.whoWon());
   }
-  console.board(board);
+  //console.board(board);
   while(true){
     turn(player1,(isXfirst)?'X':'O');
     if(board.whoWon()){break;}

@@ -20,9 +20,9 @@ var compair = function(p1,p2,strp1,strp2,gameNumber){
         gameEndBoards.push(game(p1,p2,(i/2===Math.floor(i/2))?true:false));
         whoWonStats[gameEndBoards[i].whoWon()]++;
       }
-      console.log('X won '+whoWonStats.X/gameNumber*100+'%');
-      console.log('O won '+whoWonStats.O/gameNumber*100+'%');
-      console.log('\'twas a match '+whoWonStats['=']/gameNumber*100+'%');
+      //console.log('X won '+whoWonStats.X/gameNumber*100+'%');
+      //console.log('O won '+whoWonStats.O/gameNumber*100+'%');
+      //console.log('\'twas a match '+whoWonStats['=']/gameNumber*100+'%');
       if(gameNumber%2===0){
         var netData = JSON.parse(fs.readFileSync('./netData.json'));
         netData[strp1] = netData[strp1] || {};
