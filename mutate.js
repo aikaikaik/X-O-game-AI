@@ -1,3 +1,4 @@
+var main = function(){
 var compairAll = require('./mainScript.js');
 var fs = require('fs');
 var mutateNetFile = function(netName){
@@ -13,7 +14,7 @@ var mutateNetFile = function(netName){
     if(Math.random()<0.2){var id = Math.floor(Math.random()*network.nodes.length);var newId = network.nodes.length; network.nodes.push(network.nodes[id]); for(var i = 0; i < network.edges.length; i++){var edge = network.edges[i]; if(edge.val===id){edge.lightNodeNum=newid; network.edges.push(edge);}}; return network;}
     return network;
   };
-  var name = netName+Math.floor(Math.random()*10000);
+  var name = Math.floor(Math.random()*10000);
   var newNet = mutate(netNameToNet(netName));
   fs.writeFileSync('./nets/'+name+'.net.json',JSON.stringify(newNet));
   netNames.push(name);
@@ -37,10 +38,15 @@ goodNets.forEach(function(val,i,arr){
   }
   if(goodNets.indexOf(minNetName)===-1){goodNets.push(minNetName);}
 });
+if(goodNets.length>4){goodNets=goodNets.slice(Math.floor(goodNets.length/3));}
 fs.writeFileSync('./goodNets.json',JSON.stringify(goodNets));
-fs.writeFileSync('./nets.json',JSON.stringify(goodNets));
-for(var i = 0; i<netNames; i++){
-  if(goodNets.indexOf(netNames[i])===-1){
+for(var i = 0; i<netNames.length; i++){
+  if(goodNets.indexOf(netNames[i])===-1 && netNames[i]!=='random'){
     fs.unlink('./nets/'+netNames[i]+'.net.json');
   }
 }
+fs.writeFileSync('./nets.json',JSON.stringify(goodNets));
+console.log('end mutation');
+};
+
+if(module.parent){module.exports = main;}else{main();}
