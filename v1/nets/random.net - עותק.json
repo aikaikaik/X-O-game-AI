@@ -1,0 +1,60 @@
+{
+  "edges":[
+    {"lightOn":{"x":0,"y":0, "val":null},"lightNodeNum":0}
+    ,{"lightOn":{"x":0,"y":1, "val":null},"lightNodeNum":1}
+    ,{"lightOn":{"x":0,"y":2, "val":null},"lightNodeNum":2}
+    ,{"lightOn":{"x":1,"y":0, "val":null},"lightNodeNum":3}
+    ,{"lightOn":{"x":1,"y":1, "val":null},"lightNodeNum":4}
+    ,{"lightOn":{"x":1,"y":2, "val":null},"lightNodeNum":5}
+    ,{"lightOn":{"x":2,"y":0, "val":null},"lightNodeNum":6}
+    ,{"lightOn":{"x":2,"y":1, "val":null},"lightNodeNum":7}
+    ,{"lightOn":{"x":2,"y":2, "val":null},"lightNodeNum":8}
+  ],
+  "nodes":[
+    [
+      [1,0,0]
+      ,[0,0,0]
+      ,[0,0,0]
+    ]
+    ,[
+      [0,1,0]
+      ,[0,0,0]
+      ,[0,0,0]
+    ]
+    ,[
+      [0,0,1]
+      ,[0,0,0]
+      ,[0,0,0]
+    ]
+    ,[
+      [0,0,0]
+      ,[1,0,0]
+      ,[0,0,0]
+    ]
+    ,[
+      [0,0,0]
+      ,[0,1,0]
+      ,[0,0,0]
+    ]
+    ,[
+      [0,0,0]
+      ,[0,0,1]
+      ,[0,0,0]
+    ]
+    ,[
+      [0,0,0]
+      ,[0,0,0]
+      ,[1,0,0]
+    ]
+    ,[
+      [0,0,0]
+      ,[0,0,0]
+      ,[0,1,0]
+    ]
+    ,[
+      [0,0,0]
+      ,[0,0,0]
+      ,[0,0,1]
+    ]
+  ]
+}
