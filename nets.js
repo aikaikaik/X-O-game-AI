@@ -7,7 +7,6 @@ Net.run = function(){
 Net.mutate = function(mutationRate){
 
 };
-module.exports.Net = Net;
 module.exports.makeNet = function(layerLens,makeFunc){
   var net = [];
   var makePerceptron = function(lena,lenb){
