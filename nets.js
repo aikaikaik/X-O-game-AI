@@ -14,7 +14,7 @@ Perceptron.run = function(inputLayer){
   }
   return result;
 };
-// mutationRate -> mutated net
+// (mutationRate,mutationFunc) -> mutated net
 Perceptron.mutate = function(mutationRate,mutationFunc){
   var result = this;
   for(var i = 0; i < this.length; i++){
@@ -49,7 +49,7 @@ Net.run = function(inputLayer){
   }
   return currentLayer;
 };
-// mutationRate -> mutated net
+// (mutationRate,mutationFunc) -> mutated net
 Net.mutate = function(mutationRate,mutationFunc){
   var result = this;
   for(var i = 0; i < this.length; i++){
@@ -62,6 +62,13 @@ module.exports.makeNet = function(layerLens,makeFunc){
   for(var i = 0; i < layerLens.length-1; i++){
     net.push(makePerceptron(layerLens[i],layerLens[i+1],makeFunc));
   }
+  net.prototype = Net;
+  net.__proto__ = net.prototype;
+  return net;
+};
+//JSONdata -> net
+module.exports.netFromJSON = function(JSONdata){
+  var net = JSON.parse(JSONdata);
   net.prototype = Net;
   net.__proto__ = net.prototype;
   return net;
