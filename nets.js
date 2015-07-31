@@ -69,6 +69,10 @@ module.exports.makeNet = function(layerLens,makeFunc){
 //JSONdata -> net
 module.exports.netFromJSON = function(JSONdata){
   var net = JSON.parse(JSONdata);
+  for(var i in net){
+    net[i].prototype = Perceptron;
+    net[i].__proto__ = net[i].prototype;
+  }
   net.prototype = Net;
   net.__proto__ = net.prototype;
   return net;
