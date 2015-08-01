@@ -62,18 +62,19 @@ var fakeBoard = function(board,player){
     }
   };
 };
-module.exports = function(player1,player2,isXfirst){
+module.exports = function(player1,player2,isXfirst,logGame){
   var board = Board();
+  if(typeof logGame !== 'boolean')var logGame=false;
   var turn = function(playFunc,player){
-    //console.count(player);
+    if(logGame)console.count(player);
     var change = playFunc(fakeBoard(board,player));
     if(board.getData()[change.x][change.y]){console.error('over-riding')}
-    //console.change(change);
+    if(logGame)console.change(change);
     change.val = player;
-    //console.change(change);
+    if(logGame)console.change(change);
     board.addSq(change);
-    //console.board(board);
-    //console.log(board.whoWon());
+    if(logGame)console.board(board);
+    if(logGame)console.log(board.whoWon());
   }
   //console.board(board);
   while(true){

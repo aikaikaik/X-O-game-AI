@@ -7,4 +7,4 @@ var fs = require('fs');
 
 var compP = netToPlayer(nets.netFromJSON(fs.readFileSync(rls.question('computer player?: '))));
 
-game(compP,function(board){console.board(board);return {'x':rls.question('x: '),'y':rls.question('y: ')};});
+game(compP,function(board){console.board(board);return {'x':rls.question('x: '),'y':rls.question('y: ')};},true,true);
