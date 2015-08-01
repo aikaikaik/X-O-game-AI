@@ -1,8 +1,8 @@
-//Perceptron is the prototype of the perceptrons;
-//the `this` key word will refere to the perceptron
-var Perceptron = [];
+//Layer is the prototype of the layers;
+//the `this` key word will refere to the layer
+var Layer = [];
 // input layer -> output layer
-Perceptron.run = function(inputLayer){
+Layer.run = function(inputLayer){
   var sigmoid = function(x){return 1/(1+Math.pow(Math.E,-x));};
   var outputLen = this[0].length;
   var inputLen = this.length;
@@ -15,7 +15,7 @@ Perceptron.run = function(inputLayer){
   return result;
 };
 // (mutationRate,mutationFunc) -> mutated net
-Perceptron.mutate = function(mutationRate,mutationFunc){
+Layer.mutate = function(mutationRate,mutationFunc){
   var result = this;
   for(var i = 0; i < this.length; i++){
     for(var j = 0; j < this[i].length; j++){
@@ -24,17 +24,17 @@ Perceptron.mutate = function(mutationRate,mutationFunc){
   }
   return result;
 };
-var makePerceptron = function(lena,lenb,makeFunc){
-  var perceptron = [];
+var makeLayer = function(lena,lenb,makeFunc){
+  var layer = [];
   for(var a = 0; a < lena+1; a++){
-    perceptron[a]=[];
+    layer[a]=[];
     for(var b = 0; b < lenb; b++){
-      perceptron[a][b]=makeFunc();
+      layer[a][b]=makeFunc();
     }
   }
-  perceptron.prototype = Perceptron;
-  perceptron.__proto__ = perceptron.prototype;
-  return perceptron;
+  layer.prototype = Layer;
+  layer.__proto__ = layer.prototype;
+  return layer;
 };
 
 //Net is the prototype of the nets;
@@ -60,7 +60,7 @@ Net.mutate = function(mutationRate,mutationFunc){
 module.exports.makeNet = function(layerLens,makeFunc){
   var net = [];
   for(var i = 0; i < layerLens.length-1; i++){
-    net.push(makePerceptron(layerLens[i],layerLens[i+1],makeFunc));
+    net.push(makeLayer(layerLens[i],layerLens[i+1],makeFunc));
   }
   net.prototype = Net;
   net.__proto__ = net.prototype;
@@ -70,7 +70,7 @@ module.exports.makeNet = function(layerLens,makeFunc){
 module.exports.netFromJSON = function(JSONdata){
   var net = JSON.parse(JSONdata);
   for(var i in net){
-    net[i].prototype = Perceptron;
+    net[i].prototype = Layer;
     net[i].__proto__ = net[i].prototype;
   }
   net.prototype = Net;
