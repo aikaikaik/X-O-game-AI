@@ -12,7 +12,7 @@ var hiddenLayerLen = 18;
 var poolLen = 6;
 var genNumber = rls.question('How many gens?: ');
 var id = Math.floor(Math.random()*1000);
-var saveEvery = 12^4;
+var saveEvery = Math.pow(12,4);
 
 //setup
 var net = nets.makeNet([18,hiddenLayerLen,9],function(){return Math.floor(Math.random()*10)/10;});
@@ -32,7 +32,7 @@ var main = function(){
   for(var i = 0; i < genNumber; i++){
     if(i%12===0){console.log('beginning generation number '+i);}
     gen();
-    if(i%10000===0){console.log('file Save');saveToFile(i);}
+    if(i%saveEvery===0){console.log('file Save');saveToFile(i);}
   }
   console.log('end of gens');
   saveToFile(i);
@@ -48,4 +48,5 @@ var saveToFile = function(i){
 };
 
 //run main
+fs.mkdirSync('./run'+id);
 main();
