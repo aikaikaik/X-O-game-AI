@@ -19,13 +19,22 @@ var net = nets.makeNet([18,hiddenLayerLen,9],function(){return Math.floor(Math.r
 var pool = [];
 for(var i = 0;  i < poolLen; i++){pool.push(net);}
 
+var bell = function(){
+  var r = Math.random()*2-1;
+  if(Math.random()<(1/(1+r*r)-0.4)){
+    return r;
+  }else{
+    return bell();
+  }
+};
+
 var gen = function(){
   var randomIndex = function(other){var a = Math.floor(Math.random()*pool.length);if(a===other){return randomIndex(other);}else{return a;}};
   var p1index = randomIndex(NaN);
   var p2index = randomIndex(p1index);
   var betterPindex = compair([p1index,p2index].map(function(val){return netToPlayer(pool[val]);}),[p1index,p2index],100);
   var worsePindex = (betterPindex===p1index)?p2index:p1index;
-  pool[worsePindex] = pool[betterPindex].mutate(mutationRate,function(val){return val+Math.floor((Math.random()*0.75-0.375)*100)/100;});
+  pool[worsePindex] = pool[betterPindex].mutate(mutationRate,function(val){return val+bell();});
 };
 
 var main = function(){
