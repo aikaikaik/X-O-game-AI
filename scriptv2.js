@@ -66,9 +66,21 @@ var saveToFile = function(net,i){
 };
 //run
 fs.mkdirSync('./v2.5_nets/run'+id);
+fs.writeFileSync('./v2.5_nets/run'+id+'/data.json','[]');
+var dataObj = [];
+var firstNet = mainNet;
+var lastNet = mainNet;
 for(var i = 0; i < genNumber; i++){
+  if((i+1)%12===0)lastNet = mainNet;
   mainNet = gen(mainNet);
   if(i%60===0){console.log(i);}
   if(i%saveEvery===0){saveToFile(mainNet,i);}
+  if(i%12===0){
+    var newData = [i,compair(firstNet,mainNet),compair(lastNet,mainNet)];
+    dataObj.push(newData);
+  }
+  if(i%288===0){
+    fs.writeFileSync('./v2.5_nets/run'+id+'/data.json',JSON.stringify(dataObj));
+  }
 }
 saveToFile(mainNet,genNumber-1);
