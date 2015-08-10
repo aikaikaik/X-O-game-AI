@@ -26,13 +26,13 @@ var mainNet = nets.makeNet([18,hiddenLayerLen,9],function(){return Math.random()
 //compair parent & childs, return child fitness
 var compair = function(n){
   return function(parent,child){
-    var childData = 0;
+    var pd = 0;
+    var winnerAvatar = '';
     for(var i = 0; i < n; i++){
-      var winnerAvatar = (i%2===0)?game(netToPlayer(parent),netToPlayer(child),true).whoWon():game(netToPlayer(child),netToPlayer(parent),false).whoWon();
-      var childAvatar = 'O';
-      if(winnerAvatar===childAvatar){childData++;}
+      winnerAvatar = (i%2===0)?game(netToPlayer(parent),netToPlayer(child),true).whoWon():game(netToPlayer(child),netToPlayer(parent),false).whoWon();
+      if(winnerAvatar==='X'){pd++;}
     }
-    return childData/n;
+    return 1-(pd/n);
   };
 }(100);
 //gen
