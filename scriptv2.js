@@ -34,7 +34,7 @@ var compair = function(n){
     }
     return 1-(pd/n);
   };
-}(100);
+}(200);
 //gen
 var gen = function(parent){
   //vars
