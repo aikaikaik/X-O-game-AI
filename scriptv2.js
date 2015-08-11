@@ -22,21 +22,29 @@ var mutateFunc = function(val){
   }
 };
 var mainNet = nets.makeNet([18,hiddenLayerLen,9],function(){return Math.random()*2-1;});
+var randomPlayer = function(b){
+  var result = {'x':Math.floor(Math.random()*3),'y':Math.floor(Math.random()*3)};
+  if(b.getData()[result.x][result.y]===null){
+    return result;
+  }else{
+    return randomPlayer(b);
+  }
+};
 //main code
 //compair parent & childs, return child fitness
 var compair = function(n){
-  return function(parent,child){
-    var pd = 0;
+  return function(player,child){
+    var childData = 0;
     var winnerAvatar = '';
     for(var i = 0; i < n; i++){
-      winnerAvatar = (i%2===0)?game(netToPlayer(parent),netToPlayer(child),true).whoWon():game(netToPlayer(child),netToPlayer(parent),false).whoWon();
-      if(winnerAvatar==='X'){pd++;}
+      winnerAvatar = (i%2===0)?game(player,netToPlayer(child),true).whoWon():game(netToPlayer(child),player,false).whoWon();
+      if(winnerAvatar!=='X'){childData++;}
     }
-    return 1-(pd/n);
+    return (childData/n);
   };
-}(200);
+}(500);
 //gen
-var gen = function(parent){
+var gen = function(parentNet,player){
   //vars
   var childs = [];
   var childFitness = [];
@@ -44,16 +52,17 @@ var gen = function(parent){
   var bestChildIndex;
   var bestChildFitness = 0;
   //push childs
-  for(var i = 0; i < mutationNum; i++){
-    childs.push(parent.mutate(mutationRate,mutateFunc));
-    childFitness.push(compair(parent,childs[i]));
+  for(var j = 0; j < mutationNum; j++){
+    childs.push(parentNet.mutate(mutationRate,mutateFunc));
+    childFitness.push(compair(player,childs[j]));
   }
   //push parent
-  childs.push(parent);
-  childFitness.push(compair(parent,childs[mutationNum]));
+  childs.push(parentNet);
+  childFitness.push(compair(player,childs[mutationNum]));
   //get max
   childFitness.forEach(function(val,i,arr){if(val>bestChildFitness){bestChildIndex=i;bestChildFitness=val;}});
   bestChild = childs[bestChildIndex];
+  dataObj.push([i,bestChildFitness]);
   //return max
   return bestChild;
 };
@@ -68,17 +77,10 @@ var saveToFile = function(net,i){
 fs.mkdirSync('./v2.5_nets/run'+id);
 fs.writeFileSync('./v2.5_nets/run'+id+'/data.json','[]');
 var dataObj = [];
-var firstNet = mainNet;
-var lastNet = mainNet;
 for(var i = 0; i < genNumber; i++){
-  if((i+1)%12===0)lastNet = mainNet;
-  mainNet = gen(mainNet);
+  mainNet = gen(mainNet,randomPlayer);
   if(i%60===0){console.log(i);}
   if(i%saveEvery===0){saveToFile(mainNet,i);}
-  if(i%12===0){
-    var newData = [i,compair(firstNet,mainNet),compair(lastNet,mainNet)];
-    dataObj.push(newData);
-  }
   if(i%288===0){
     fs.writeFileSync('./v2.5_nets/run'+id+'/data.json',JSON.stringify(dataObj));
   }
